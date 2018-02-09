@@ -1,3 +1,4 @@
+using System.Linq;
 using AutenticacaoEfCookie.Models;
 
 namespace AutenticacaoEfCookie.Dados
@@ -6,6 +7,8 @@ namespace AutenticacaoEfCookie.Dados
     {
         public static void Inicializar (AutenticacaoContexto contexto){
             contexto.Database.EnsureCreated();
+
+            if(contexto.Usuarios.Any())return; //para garantir que não serão criados usuários duplicados
 
             var usuario = new Usuario(){
                 Nome = "Gabriela",
@@ -18,6 +21,8 @@ namespace AutenticacaoEfCookie.Dados
             var permissao = new Permissao(){
                 Nome = "Financeiro"
             };
+
+            contexto.Permissoes.Add(permissao);
 
             var usuariopermissao = new UsuarioPermissao(){
                 IdUsuario = usuario.IdUsuario,
